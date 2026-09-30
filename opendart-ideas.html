@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenDART 아이디어북</title>
+<style>
+  :root{
+    --bg:#f7f6f2; --card:#ffffff; --ink:#1d1d1b; --muted:#6b6a64; --line:#e4e2da;
+    --accent:#1f5eff; --accent-soft:#e8eeff; --code:#f1f0ea;
+    --easy:#1a7f4b; --mid:#b26b00; --hard:#b3261e;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#131312; --card:#1c1c1a; --ink:#ecebe6; --muted:#9d9b93; --line:#2e2d2a;
+      --accent:#7ea2ff; --accent-soft:#1f2740; --code:#23231f;
+      --easy:#5fd09a; --mid:#f0b75a; --hard:#ff8a80;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.65 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 20px 80px}
+  header h1{font-size:clamp(28px,4vw,40px);line-height:1.2;margin:0 0 12px;letter-spacing:-.02em}
+  header p{color:var(--muted);margin:0;max-width:720px}
+  .eyebrow{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.04em;margin-bottom:8px}
+  h2{font-size:22px;margin:56px 0 16px;letter-spacing:-.01em}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:28px}
+  .fact{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .fact b{display:block;font-size:20px}
+  .fact span{color:var(--muted);font-size:13px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .filters button{border:1px solid var(--line);background:var(--card);color:var(--ink);
+    padding:7px 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+  .filters button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+  .card h3{margin:0;font-size:17px;line-height:1.35}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .tag{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+  .lvl{font-size:12px;font-weight:700}
+  .lvl.easy{color:var(--easy)} .lvl.mid{color:var(--mid)} .lvl.hard{color:var(--hard)}
+  .apis{margin-top:auto;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--muted)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--code);padding:1px 5px;border-radius:4px}
+  .table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12.5px;color:var(--muted);font-weight:600;background:var(--code)}
+  tr:last-child td{border-bottom:0}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:18px;overflow-x:auto;
+    font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:10px}
+  .steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 52px;position:relative}
+  .steps li::before{content:counter(s);position:absolute;left:16px;top:14px;width:24px;height:24px;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:grid;place-items:center}
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+  footer{margin-top:64px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">OPENDART · 금융감독원 전자공시 Open API</div>
+  <h1>DART 데이터로 무엇을 만들 수 있을까</h1>
+  <p>OpenDART는 금융감독원 전자공시시스템(DART)의 공시·재무·지분 데이터를 무료 API로 제공합니다.
+     API 키 하나로 상장·비상장 기업의 공시 목록, 재무제표, 배당, 임원 보수, 대주주 지분 변동까지 가져올 수 있어요.
+     아래는 이 데이터로 만들 수 있는 프로젝트 아이디어와 시작 방법입니다.</p>
+  <div class="facts">
+    <div class="fact"><b>무료</b><span>회원가입 후 인증키(40자) 즉시 발급</span></div>
+    <div class="fact"><b>약 20,000회 / 일</b><span>개인 키 기준 일일 호출 한도</span></div>
+    <div class="fact"><b>6개 영역 · 80여 개 API</b><span>공시, 정기보고서, 재무, 지분, 주요사항, 증권신고서</span></div>
+    <div class="fact"><b>JSON · XML · XBRL</b><span>2015년 이후 재무 데이터 제공</span></div>
+  </div>
+</header>
+
+<h2>프로젝트 아이디어</h2>
+<div class="filters" id="filters">
+  <button class="on" data-f="all">전체</button>
+  <button data-f="알림">알림·모니터링</button>
+  <button data-f="투자">투자 분석</button>
+  <button data-f="시각화">시각화</button>
+  <button data-f="AI">AI 활용</button>
+  <button data-f="커리어">커리어·리서치</button>
+  <button data-f="easy">입문 난이도만</button>
+</div>
+<div class="grid" id="grid"></div>
+
+<h2>주요 API 한눈에 보기</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>영역</th><th>대표 API</th><th>엔드포인트</th><th>이런 데 쓰면 좋아요</th></tr></thead>
+  <tbody>
+    <tr><td>공시정보</td><td>공시검색</td><td><code>list.json</code></td><td>기간·회사·공시유형별 공시 목록 → 알림봇의 핵심</td></tr>
+    <tr><td></td><td>기업개황</td><td><code>company.json</code></td><td>대표자, 업종코드, 설립일, 홈페이지</td></tr>
+    <tr><td></td><td>고유번호</td><td><code>corpCode.xml</code></td><td>전체 회사의 corp_code ↔ 종목코드 매핑 (ZIP) — 가장 먼저 받기</td></tr>
+    <tr><td></td><td>공시서류원본</td><td><code>document.xml</code></td><td>공시 원문 전체 (ZIP) → AI 요약용</td></tr>
+    <tr><td>정기보고서 재무</td><td>단일회사 주요계정</td><td><code>fnlttSinglAcnt.json</code></td><td>매출·영업이익·자산 등 핵심 계정</td></tr>
+    <tr><td></td><td>다중회사 주요계정</td><td><code>fnlttMultiAcnt.json</code></td><td>여러 회사 한 번에 비교</td></tr>
+    <tr><td></td><td>전체 재무제표</td><td><code>fnlttSinglAcntAll.json</code></td><td>BS·IS·CF 모든 계정 (연결/별도)</td></tr>
+    <tr><td></td><td>주요 재무지표</td><td><code>fnlttSinglIndx.json</code></td><td>수익성·안정성·성장성 지표</td></tr>
+    <tr><td>정기보고서 주요정보</td><td>배당에 관한 사항</td><td><code>alotMatter.json</code></td><td>주당배당금, 배당성향, 시가배당률</td></tr>
+    <tr><td></td><td>직원 현황</td><td><code>empSttus.json</code></td><td>직원 수, 평균 근속, 1인 평균 급여</td></tr>
+    <tr><td></td><td>임원 개인별 보수</td><td><code>hmvAuditIndvdlBySttus.json</code></td><td>5억 이상 보수 수령 임원</td></tr>
+    <tr><td></td><td>최대주주 현황</td><td><code>hyslrSttus.json</code></td><td>최대주주·특수관계인 지분</td></tr>
+    <tr><td></td><td>타법인 출자현황</td><td><code>otrCprInvstmntSttus.json</code></td><td>기업 간 출자 관계 그래프</td></tr>
+    <tr><td></td><td>감사인·감사의견</td><td><code>accnutAdtorNmNdAdtOpinion.json</code></td><td>비적정 의견 탐지</td></tr>
+    <tr><td>지분공시</td><td>대량보유 상황보고</td><td><code>majorstock.json</code></td><td>5% 룰 — 큰손의 지분 변동</td></tr>
+    <tr><td></td><td>임원·주요주주 소유보고</td><td><code>elestock.json</code></td><td>내부자 매수·매도 추적</td></tr>
+    <tr><td>주요사항보고서</td><td>유상증자 / CB 발행 / 자사주 취득</td><td><code>piicDecsn.json</code> · <code>cvbdIsDecsn.json</code> · <code>tsstkAqDecsn.json</code></td><td>주가에 영향을 주는 이벤트 감지</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="note">보고서 코드(<code>reprt_code</code>): 11013 1분기 · 11012 반기 · 11014 3분기 · 11011 사업보고서. 모든 요청에 <code>crtfc_key</code>(인증키)가 필요합니다.</p>
+
+<h2>5분 만에 첫 호출</h2>
+<ol class="steps">
+  <li><b>opendart.fss.or.kr</b> 회원가입 → 인증키 신청 → 메일로 40자리 키 수신</li>
+  <li><code>corpCode.xml</code>을 받아 회사명 → <code>corp_code</code>(8자리) 매핑 테이블 만들기</li>
+  <li>원하는 API에 <code>corp_code</code>, <code>bsns_year</code>, <code>reprt_code</code>를 넣어 호출</li>
+</ol>
+<p class="note" style="margin-bottom:12px">예시 — 삼성전자(00126380) 2024년 사업보고서 주요 계정 조회:</p>
+<pre>import requests
+
+API_KEY = "여기에_인증키"
+url = "https://opendart.fss.or.kr/api/fnlttSinglAcnt.json"
+params = {
+    "crtfc_key": API_KEY,
+    "corp_code": "00126380",   # 삼성전자
+    "bsns_year": "2024",
+    "reprt_code": "11011",     # 사업보고서
+}
+data = requests.get(url, params=params).json()
+
+for row in data.get("list", []):
+    if row["fs_div"] == "CFS" and row["account_nm"] in ("매출액", "영업이익", "당기순이익"):
+        print(row["account_nm"], row["thstrm_amount"])</pre>
+<p class="note">💡 파이썬에서는 <code>OpenDartReader</code>, <code>dart-fss</code> 같은 라이브러리를 쓰면 회사명만으로도 조회할 수 있어 훨씬 편합니다.</p>
+
+<h2>만들 때 알아두면 좋은 것</h2>
+<div class="grid">
+  <div class="card"><h3>호출 한도 관리</h3><p>일 약 2만 회 제한이 있어요. 재무 데이터는 분기마다만 바뀌니 SQLite 등에 캐싱해 두고 공시 목록만 주기적으로 조회하세요.</p></div>
+  <div class="card"><h3>계정명이 회사마다 달라요</h3><p>"매출액" / "수익(매출액)" / "영업수익"처럼 표기가 다릅니다. 여러 회사를 비교할 땐 <code>account_id</code>(XBRL 표준 계정)로 매칭하는 게 안전해요.</p></div>
+  <div class="card"><h3>연결 vs 별도</h3><p><code>fs_div</code>가 CFS(연결)인지 OFS(별도)인지 꼭 구분하세요. 지주사는 둘의 차이가 매우 큽니다.</p></div>
+  <div class="card"><h3>실시간은 아니에요</h3><p>공시 반영에 수 분 지연이 있을 수 있어요. 초단위 트레이딩보다는 알림·분석 용도에 적합합니다.</p></div>
+</div>
+
+<footer>
+  데이터 출처: 금융감독원 OpenDART (opendart.fss.or.kr). API 명세와 한도는 변경될 수 있으니 공식 개발가이드를 확인하세요.
+</footer>
+</div>
+
+<script>
+const ideas = [
+  {t:"관심 종목 공시 알림봇", c:["알림"], l:"easy",
+   d:"보유·관심 종목에 새 공시가 올라오면 텔레그램/슬랙/카카오로 즉시 알려주는 봇. 10분마다 공시검색 API를 조회하고 새 접수번호만 전송.",
+   a:"list.json"},
+  {t:"악재 공시 조기 경보", c:["알림","투자"], l:"mid",
+   d:"유상증자, 전환사채(CB) 발행, 감사의견 비적정, 부도 등 주가에 부정적인 이벤트만 골라 경고. 희석 비율까지 계산해 보여주기.",
+   a:"piicDecsn.json · cvbdIsDecsn.json · dfOcr.json · accnutAdtorNmNdAdtOpinion.json"},
+  {t:"내부자 거래 트래커", c:["알림","투자"], l:"mid",
+   d:"임원·주요주주의 장내 매수/매도를 추적해 '대표이사가 자사주를 샀다' 같은 신호를 모아 보여주는 대시보드.",
+   a:"elestock.json · majorstock.json"},
+  {t:"기업 재무 대시보드", c:["시각화","투자"], l:"easy",
+   d:"회사명을 검색하면 최근 5~10년 매출·영업이익·순이익·부채비율 추이를 차트로 그려주는 웹페이지.",
+   a:"fnlttSinglAcnt.json · fnlttSinglIndx.json"},
+  {t:"경쟁사 비교 리포트", c:["시각화","투자"], l:"easy",
+   d:"같은 업종 회사 여러 곳의 영업이익률·ROE·성장률을 한 표와 레이더 차트로 비교. 다중회사 API로 한 번에 조회.",
+   a:"fnlttMultiAcnt.json · company.json"},
+  {t:"배당주 스크리너", c:["투자"], l:"mid",
+   d:"시가배당률, 배당성향, 연속 배당 증가 연수로 필터링하는 배당주 검색기. '10년 연속 배당 늘린 회사' 찾기.",
+   a:"alotMatter.json"},
+  {t:"퀀트 팩터 데이터베이스", c:["투자"], l:"hard",
+   d:"전 상장사의 분기 재무제표를 수집해 PER·PBR·F-Score 등 팩터를 계산하고 주가 데이터와 결합해 백테스트.",
+   a:"corpCode.xml · fnlttSinglAcntAll.json"},
+  {t:"재무 건전성 점수판", c:["투자","시각화"], l:"mid",
+   d:"부채비율, 이자보상배율, 영업현금흐름, 감사의견을 종합해 기업마다 신호등(🟢🟡🔴) 점수를 매기는 서비스.",
+   a:"fnlttSinglAcntAll.json · accnutAdtorNmNdAdtOpinion.json"},
+  {t:"AI 공시 3줄 요약", c:["AI","알림"], l:"mid",
+   d:"공시 원문을 내려받아 LLM으로 '무슨 일이 있었고, 주주에게 좋은지 나쁜지'를 3줄로 요약해 알림과 함께 전송.",
+   a:"list.json · document.xml"},
+  {t:"사업보고서 Q&A 챗봇", c:["AI"], l:"hard",
+   d:"사업보고서 원문을 임베딩해 '이 회사 주요 고객사는?', '리스크 요인은?' 같은 질문에 출처와 함께 답하는 RAG 챗봇.",
+   a:"document.xml · company.json"},
+  {t:"기업 연봉·근속 비교기", c:["커리어","시각화"], l:"easy",
+   d:"취업·이직 준비용. 회사별 직원 수, 1인 평균 급여, 평균 근속연수, 남녀 비율을 비교하고 순위 매기기.",
+   a:"empSttus.json"},
+  {t:"임원 보수 랭킹", c:["커리어","시각화"], l:"easy",
+   d:"5억 원 이상 받은 임원의 보수를 모아 업종별·회사별 순위, 직원 평균 급여 대비 배율 계산.",
+   a:"hmvAuditIndvdlBySttus.json · empSttus.json"},
+  {t:"지배구조·출자 관계 지도", c:["시각화"], l:"hard",
+   d:"최대주주와 타법인 출자 데이터를 연결해 그룹사 간 지분 구조를 네트워크 그래프로 시각화.",
+   a:"hyslrSttus.json · otrCprInvstmntSttus.json"},
+  {t:"IPO·증자 캘린더", c:["알림","투자"], l:"mid",
+   d:"증권신고서 공시를 모아 공모 일정, 공모가, 주관사를 캘린더 형태로 보여주는 페이지.",
+   a:"list.json (pblntf_ty=C) · 증권신고서 주요정보 API"},
+  {t:"엑셀 자동 리포트", c:["커리어"], l:"easy",
+   d:"회사 목록만 넣으면 재무 요약·배당·주주 현황을 정리한 엑셀 파일을 자동 생성하는 파이썬 스크립트. 업무 자동화 입문용.",
+   a:"fnlttSinglAcnt.json · alotMatter.json · hyslrSttus.json"},
+];
+const lvName = {easy:"입문", mid:"중급", hard:"고급"};
+const grid = document.getElementById("grid");
+function render(f){
+  grid.innerHTML = "";
+  ideas.filter(i => f==="all" || (f==="easy" ? i.l==="easy" : i.c.includes(f))).forEach(i => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `<div class="meta">${i.c.map(c=>`<span class="tag">${c}</span>`).join("")}
+      <span class="lvl ${i.l}">● ${lvName[i.l]}</span></div>
+      <h3>${i.t}</h3><p>${i.d}</p>
+      <div class="apis">사용 API: <code>${i.a}</code></div>`;
+    grid.appendChild(el);
+  });
+}
+document.getElementById("filters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  document.querySelectorAll("#filters button").forEach(x => x.classList.toggle("on", x===b));
+  render(b.dataset.f);
+});
+render("all");
+</script>
+</body>
+</html>
